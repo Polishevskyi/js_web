@@ -3,11 +3,7 @@ const TestData = require('../../data/testData');
 const { CART_COUNTS } = require('../../src/e2e/constants/testData.constants');
 
 test.describe('Shopping cart functionality', () => {
-  test('Add multiple products to cart and remove one', async ({
-    loginPage,
-    productsPage,
-    cartPage,
-  }) => {
+  test('Add multiple products to cart and remove one', async ({ loginPage, productsPage, cartPage }) => {
     await loginPage.navigate();
     await loginPage.login(TestData.USERS.STANDARD.username, TestData.USERS.STANDARD.password);
     await productsPage.assertProductsPageDisplayed();

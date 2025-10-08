@@ -43,9 +43,7 @@ class ModelAssertions {
     const result = compareModels(this.request, this.response, fieldMappings);
 
     if (!result.success) {
-      const errorMsg = ['Model comparison failed:', ...result.mismatches.map((m) => `- ${m}`)].join(
-        '\n'
-      );
+      const errorMsg = ['Model comparison failed:', ...result.mismatches.map((m) => `- ${m}`)].join('\n');
       throw new Error(errorMsg);
     }
   }

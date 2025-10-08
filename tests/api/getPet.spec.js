@@ -1,10 +1,4 @@
-const {
-  test,
-  expect,
-  HTTP_STATUS,
-  CreatePetResponse,
-  assertThatModels,
-} = require('../../fixtures/apiFixtures');
+const { test, expect, HTTP_STATUS, CreatePetResponse, assertThatModels } = require('../../fixtures/apiFixtures');
 
 test.describe('READ Pet Test', () => {
   test('should create and read pet data from response', async ({ petSteps }) => {

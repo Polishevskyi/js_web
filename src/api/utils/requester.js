@@ -35,9 +35,7 @@ class Requester {
       response = await this.httpClient[httpMethod](url, requestData, config);
     }
 
-    const responseData = responseModel
-      ? this.instantiateModel(responseModel, response.data)
-      : response.data;
+    const responseData = responseModel ? this.instantiateModel(responseModel, response.data) : response.data;
 
     return {
       data: responseData,

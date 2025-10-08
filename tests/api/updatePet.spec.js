@@ -1,10 +1,4 @@
-const {
-  test,
-  expect,
-  HTTP_STATUS,
-  CreatePetResponse,
-  assertThatModels,
-} = require('../../fixtures/apiFixtures');
+const { test, expect, HTTP_STATUS, CreatePetResponse, assertThatModels } = require('../../fixtures/apiFixtures');
 
 test.describe('UPDATE Pet Test', () => {
   test('should update a pet and validate status code and model', async ({ petSteps }) => {

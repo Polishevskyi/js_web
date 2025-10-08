@@ -24,5 +24,11 @@ module.exports = {
     'playwright/no-wait-for-timeout': 'off',
     'func-names': 'off',
     'comma-dangle': 'off',
+    'object-curly-newline': 'warn',
+    'object-curly-spacing': 'warn',
+    'object-property-newline': 'warn',
+    indent: 'warn',
+    quotes: 'warn',
+    semi: 'warn',
   },
 };
