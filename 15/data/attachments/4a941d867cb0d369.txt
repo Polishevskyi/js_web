@@ -1,0 +1,24 @@
+
+================================================================================
+▶ Starting test: Successful login and logout
+================================================================================
+
+→ LoginPage.navigate()
+
+→ LoginPage.assertLoginPageDisplayed()
+
+→ LoginPage.login()
+
+→ ProductsPage.assertProductsPageDisplayed()
+
+→ ProductsPage.waitForUrl()
+
+→ ProductsPage.logout()
+
+→ LoginPage.waitForUrl()
+
+→ LoginPage.assertLoginPageDisplayed()
+
+✓ Test passed: Successful login and logout
+================================================================================
+
