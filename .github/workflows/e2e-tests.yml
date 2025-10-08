@@ -144,6 +144,7 @@ jobs:
           if [ -d "allure-history" ]; then
             echo "Allure history directory exists, keeping it for next run"
             ls -la allure-history/
+            echo "History files count: $(find allure-history -name "*.json" | wc -l)"
           else
             echo "Allure history directory not found"
           fi
@@ -155,3 +156,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+          keep_files: true
