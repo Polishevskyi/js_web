@@ -1,14 +1,7 @@
 const BaseModel = require('./BaseModel');
 
 class CreatePetResponse extends BaseModel {
-  constructor({
-    id,
-    category,
-    name,
-    photoUrls,
-    tags,
-    status,
-  }) {
+  constructor({ id, category, name, photoUrls, tags, status }) {
     super({
       id,
       category,
