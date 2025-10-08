@@ -108,27 +108,17 @@ jobs:
           path: allure-results
           merge-multiple: true
 
+      - name: Cache Allure history
+        uses: actions/cache@v3
+        with:
+          path: allure-history
+          key: allure-history-${{ github.run_number }}
+          restore-keys: |
+            allure-history-
+
       - name: Create allure-history directory
         if: always()
         run: mkdir -p allure-history
-
-      - name: Get Allure history
-        if: always()
-        continue-on-error: true
-        run: |
-          if git ls-remote --exit-code --heads origin gh-pages; then
-            git fetch origin gh-pages:gh-pages
-            git checkout gh-pages
-            if [ -d "allure-history" ]; then
-              cp -r allure-history ../allure-history-backup
-            fi
-            git checkout -
-            if [ -d "../allure-history-backup" ]; then
-              cp -r ../allure-history-backup/* allure-history/ 2>/dev/null || true
-            fi
-          else
-            echo "gh-pages branch does not exist yet, creating fresh history"
-          fi
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
@@ -148,6 +138,13 @@ jobs:
           else
             echo "Allure history directory not found"
           fi
+
+      - name: Cache Allure history for next run
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: allure-history
+          key: allure-history-${{ github.run_number }}
 
       - name: Deploy report to Github Pages
         if: always()
