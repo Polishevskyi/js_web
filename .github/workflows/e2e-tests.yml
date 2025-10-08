@@ -126,6 +126,8 @@ jobs:
             if [ -d "../allure-history-backup" ]; then
               cp -r ../allure-history-backup/* allure-history/ 2>/dev/null || true
             fi
+          else
+            echo "gh-pages branch does not exist yet, creating fresh history"
           fi
 
       - name: Generate Allure Report
@@ -135,6 +137,16 @@ jobs:
           allure_results: allure-results
           allure_history: allure-history
           keep_reports: 20
+
+      - name: Save Allure history for next run
+        if: always()
+        run: |
+          if [ -d "allure-history" ]; then
+            echo "Allure history directory exists, keeping it for next run"
+            ls -la allure-history/
+          else
+            echo "Allure history directory not found"
+          fi
 
       - name: Deploy report to Github Pages
         if: always()
