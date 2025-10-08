@@ -133,13 +133,13 @@ npm run format         # Format with prettier
   timeout: 60000,              // Test timeout
   retryCount: 0,               // Retry count on failure (local)
   workers: 4,                  // Parallel workers (local)
-  
+
   // CI-specific settings
   ci: {
     retries: 3,                // 3 retries in CI
     workers: 3,                // 3 workers per browser in CI
   },
-  
+
   navigationTimeout: 30000,    // Navigation timeout
   actionTimeout: 15000,        // Action timeout
   headless: true,              // Headless mode
@@ -156,6 +156,7 @@ STANDARD_PASSWORD=secret_sauce       # Password
 ```
 
 **Benefits of separation:**
+
 - Config can be changed without access to credentials
 - .env contains minimal sensitive information
 - .env.example helps to quickly set up the project
@@ -171,6 +172,7 @@ Settings → Secrets and variables → Actions → New repository secret
 ```
 
 Required secrets:
+
 - `BASE_URL` - Application URL (e.g., https://www.saucedemo.com)
 - `STANDARD_USER` - Test username
 - `STANDARD_PASSWORD` - Test password
@@ -178,12 +180,14 @@ Required secrets:
 ### Automatic Triggers
 
 GitHub Actions automatically runs tests on:
+
 - Push to `main`, `master`, or `develop` branches
 - Pull requests to these branches
 
 ### Manual Trigger
 
 You can manually trigger tests from GitHub Actions tab:
+
 - **All browsers** - runs tests on Chromium, Firefox, and WebKit
 - **Specific browser** - choose one browser to test
 

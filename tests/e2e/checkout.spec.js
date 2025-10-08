@@ -19,7 +19,9 @@ test.describe('Checkout flow', () => {
     await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.BACKPACK));
     await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.ONE_ITEM);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.FLEECE_JACKET));
+    await productsPage.click(
+      productsPage.locators.addToCartButton(TestData.PRODUCTS.FLEECE_JACKET)
+    );
     await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.TWO_ITEMS);
 
     await productsPage.click(productsPage.locators.shoppingCartLink);
