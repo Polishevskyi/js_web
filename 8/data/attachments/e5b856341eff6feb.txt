@@ -1,0 +1,50 @@
+
+================================================================================
+▶ Starting test: Complete checkout process with generated user data
+================================================================================
+
+→ LoginPage.navigate()
+
+→ LoginPage.login()
+
+→ ProductsPage.assertProductsPageDisplayed()
+
+→ ProductsPage.click()
+
+→ ProductsPage.assertText()
+
+→ ProductsPage.click()
+
+→ ProductsPage.assertText()
+
+→ ProductsPage.click()
+
+→ CartPage.assertCartPageDisplayed()
+
+→ CartPage.assertCartItemsCount()
+
+→ CartPage.click()
+
+→ CheckoutPage.assertCheckoutStepOneDisplayed()
+
+→ CheckoutPage.fillCheckoutInformation()
+
+→ CheckoutPage.click()
+
+→ CheckoutPage.assertCheckoutOverviewDisplayed()
+
+→ CheckoutPage.click()
+
+→ CheckoutPage.assertOrderComplete()
+
+→ CheckoutPage.waitForUrl()
+
+→ CheckoutPage.click()
+
+→ ProductsPage.assertProductsPageDisplayed()
+
+→ ProductsPage.assertElementNotVisible()
+
+✓ Test passed: Complete checkout process with generated user data
+================================================================================
+
