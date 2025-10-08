@@ -1,0 +1,17 @@
+module.exports = {
+  firstNameInput: '#first-name',
+  lastNameInput: '#last-name',
+  postalCodeInput: '#postal-code',
+  continueButton: '#continue',
+  cancelButton: '#cancel',
+  errorMessage: '[data-test="error"]',
+  pageTitle: '.title',
+  cartItem: '.cart_item',
+  subtotalLabel: '.summary_subtotal_label',
+  taxLabel: '.summary_tax_label',
+  totalLabel: '.summary_total_label',
+  finishButton: '#finish',
+  completeHeader: '.complete-header',
+  completeText: '.complete-text',
+  backHomeButton: '#back-to-products',
+};
