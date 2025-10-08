@@ -23,5 +23,6 @@ module.exports = {
     'playwright/no-wait-for-selector': 'off',
     'playwright/no-wait-for-timeout': 'off',
     'func-names': 'off',
+    'comma-dangle': 'off',
   },
 };
