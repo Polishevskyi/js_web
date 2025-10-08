@@ -458,10 +458,12 @@ GitHub Actions automatically runs tests on:
 You can manually trigger tests from GitHub Actions tab with options:
 
 **Browser selection:**
+
 - `all` - runs tests on Chromium, Firefox, and WebKit
 - `chromium` / `firefox` / `webkit` - specific browser
 
 **Test type selection:**
+
 - `all` - E2E + API tests
 - `e2e` - only E2E tests
 - `api` - only API tests
