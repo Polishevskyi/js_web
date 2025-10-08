@@ -1,5 +1,5 @@
-const { test } = require('../../src/fixtures/baseFixtures');
-const TestData = require('../../src/data/testData');
+const { test } = require('../../fixtures/e2eFixtures');
+const TestData = require('../../data/testData');
 
 test.describe('Login and logout functionality', () => {
   test('Successful login and logout', async ({ loginPage, productsPage }) => {

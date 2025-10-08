@@ -25,6 +25,16 @@ class Logger {
     const symbol = status === 'passed' ? '✓' : '✗';
     console.log(`\n${symbol} Test ${status}: ${testName}\n${'='.repeat(80)}\n`);
   }
+
+  static apiRequest(method, url, data = null) {
+    const dataStr = data ? ` | Data: ${JSON.stringify(data).substring(0, 100)}` : '';
+    this.step(`${method.toUpperCase()} ${url}${dataStr}`);
+  }
+
+  static apiResponse(status, data = null) {
+    const dataStr = data ? ` | ${JSON.stringify(data).substring(0, 100)}` : '';
+    this.step(`Response: ${status}${dataStr}`);
+  }
 }
 
 module.exports = Logger;

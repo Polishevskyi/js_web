@@ -1,7 +1,7 @@
-const { test } = require('../../src/fixtures/baseFixtures');
-const TestData = require('../../src/data/testData');
-const DataGenerator = require('../../src/data/dataGenerator');
-const { CART_COUNTS } = require('../../src/constants/testData.constants');
+const { test } = require('../../fixtures/e2eFixtures');
+const TestData = require('../../data/testData');
+const DataGenerator = require('../../data/e2eGenerators');
+const { CART_COUNTS } = require('../../src/e2e/constants/testData.constants');
 
 test.describe('Checkout flow', () => {
   test('Complete checkout process with generated user data', async ({

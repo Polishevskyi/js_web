@@ -1,8 +1,8 @@
 const { test: base } = require('@playwright/test');
-const LoginPage = require('../pages/LoginPage');
-const ProductsPage = require('../pages/ProductsPage');
-const CartPage = require('../pages/CartPage');
-const CheckoutPage = require('../pages/CheckoutPage');
+const LoginPage = require('../src/e2e/pages/LoginPage');
+const ProductsPage = require('../src/e2e/pages/ProductsPage');
+const CartPage = require('../src/e2e/pages/CartPage');
+const CheckoutPage = require('../src/e2e/pages/CheckoutPage');
 const Logger = require('../helpers/logger');
 
 const test = base.extend({

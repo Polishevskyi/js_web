@@ -1,5 +1,5 @@
 const { expect } = require('@playwright/test');
-const Logger = require('../helpers/logger');
+const Logger = require('../../../helpers/logger');
 
 class BasePage {
   constructor(page) {

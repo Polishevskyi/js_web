@@ -1,6 +1,6 @@
-const { test } = require('../../src/fixtures/baseFixtures');
-const TestData = require('../../src/data/testData');
-const { CART_COUNTS } = require('../../src/constants/testData.constants');
+const { test } = require('../../fixtures/e2eFixtures');
+const TestData = require('../../data/testData');
+const { CART_COUNTS } = require('../../src/e2e/constants/testData.constants');
 
 test.describe('Shopping cart functionality', () => {
   test('Add multiple products to cart and remove one', async ({

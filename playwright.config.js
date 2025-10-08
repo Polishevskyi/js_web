@@ -76,5 +76,13 @@ module.exports = defineConfig({
         viewport: config.viewport,
       },
     },
+
+    {
+      name: 'api',
+      testDir: './tests/api',
+      use: {
+        baseURL: process.env.API_BASE_URL,
+      },
+    },
   ],
 });
