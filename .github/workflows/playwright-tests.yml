@@ -76,10 +76,10 @@ jobs:
           echo "STANDARD_PASSWORD=${STANDARD_PASSWORD}" >> .env
           echo "API_BASE_URL=${API_BASE_URL}" >> .env
         env:
-          BASE_URL: ${{ secrets.BASE_URL || 'https://www.saucedemo.com' }}
-          STANDARD_USER: ${{ secrets.STANDARD_USER || 'standard_user' }}
-          STANDARD_PASSWORD: ${{ secrets.STANDARD_PASSWORD || 'secret_sauce' }}
-          API_BASE_URL: ${{ secrets.API_BASE_URL || 'https://petstore.swagger.io/v2' }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          STANDARD_USER: ${{ secrets.STANDARD_USER }}
+          STANDARD_PASSWORD: ${{ secrets.STANDARD_PASSWORD }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
 
       - name: Run E2E tests
         if: ${{ !github.event.inputs.test_type || github.event.inputs.test_type == 'e2e' || github.event.inputs.test_type == 'all' }}
