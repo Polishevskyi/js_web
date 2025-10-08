@@ -102,20 +102,24 @@ jobs:
           path: allure-results
           merge-multiple: true
 
-      - name: Get Allure history
-        uses: actions/checkout@v4
+      - name: Create allure-history directory
         if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+        run: mkdir -p allure-history
 
-      - name: Copy Allure history
+      - name: Get Allure history
         if: always()
         continue-on-error: true
         run: |
-          if [ -d "gh-pages/allure-history" ]; then
-            cp -r gh-pages/allure-history/. allure-history/
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git fetch origin gh-pages:gh-pages
+            git checkout gh-pages
+            if [ -d "allure-history" ]; then
+              cp -r allure-history ../allure-history-backup
+            fi
+            git checkout -
+            if [ -d "../allure-history-backup" ]; then
+              cp -r ../allure-history-backup/* allure-history/ 2>/dev/null || true
+            fi
           fi
 
       - name: Generate Allure Report
