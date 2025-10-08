@@ -18,6 +18,11 @@ on:
           - firefox
           - webkit
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
     name: Test on ${{ matrix.browser }}
