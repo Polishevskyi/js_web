@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","447","should create and read pet data from response","api","Wed Oct 08 14:41:41 UTC 2025","passed","Wed Oct 08 14:41:42 UTC 2025","READ Pet Test","api/getPet.spec.js","",""
+"","400","should create a pet and validate status code and model","api","Wed Oct 08 14:41:41 UTC 2025","passed","Wed Oct 08 14:41:42 UTC 2025","CREATE Pet Test","api/createPet.spec.js","",""
+"","529","should delete a pet and validate status code","api","Wed Oct 08 14:41:41 UTC 2025","passed","Wed Oct 08 14:41:42 UTC 2025","DELETE Pet Test","api/deletePet.spec.js","",""
+"","162","should update a pet and validate status code and model","api","Wed Oct 08 14:41:42 UTC 2025","passed","Wed Oct 08 14:41:42 UTC 2025","UPDATE Pet Test","api/updatePet.spec.js","",""
