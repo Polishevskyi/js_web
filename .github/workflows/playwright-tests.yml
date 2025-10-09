@@ -150,3 +150,17 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           keep_files: true
+
+      - name: Send Telegram notification
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_EVENT_REPOSITORY_NAME: ${{ github.event.repository.name }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          chmod +x send-telegram-notification.sh
+          ./send-telegram-notification.sh
