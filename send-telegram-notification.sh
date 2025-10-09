@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Telegram Notification Script for Playwright Tests
+# This script collects test results from Allure reports and sends notifications to Telegram
+# Usage: ./send-telegram-notification.sh
+# Required environment variables: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, GITHUB_REPOSITORY, GITHUB_SHA, etc.
+
 # Get test results from Allure
 if [ -d "allure-results" ]; then
     TOTAL_TESTS=$(find allure-results -name "*.json" -exec jq -r '.status // empty' {} \; 2>/dev/null | grep -v "^$" | wc -l)
@@ -51,7 +56,7 @@ else
     FAILED_TESTS_TEXT="$FAILED_TESTS"
 fi
 
-# Build message
+# Build HTML-formatted message for Telegram
 MESSAGE="🚀 <b>Playwright Tests Completed!</b>
 
 📊 <b>Test Statistics:</b>
@@ -67,7 +72,7 @@ MESSAGE="🚀 <b>Playwright Tests Completed!</b>
 
 $STATUS_COLOR <b>Status:</b> $STATUS_TEXT"
 
-# Send to Telegram
+# Send message to Telegram using Bot API
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
   -H "Content-Type: application/json" \
   -d "{

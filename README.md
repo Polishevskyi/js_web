@@ -65,6 +65,9 @@ npm run allure:generate    # Generate report
 npm run allure:serve        # Open report
 ```
 
+**Report Preview:**
+![Allure Report](wiki/Allure_Report.png)
+
 ## 🧪 Tests
 
 ### E2E Tests
@@ -87,8 +90,10 @@ npm run allure:serve        # Open report
 ```
 ├── config.js                   # Test configuration (timeouts, workers, viewports)
 ├── playwright.config.js        # Playwright configuration
+├── send-telegram-notification.sh # Telegram notification script
 ├── .env                        # Environment variables
 ├── .env.example                # Environment template
+├── wiki/                       # Documentation images and assets
 │
 ├── helpers/                    # Shared utilities
 │   └── logger.js               # Logger for E2E and API (Allure steps, Proxy logging)
@@ -421,6 +426,10 @@ STANDARD_PASSWORD=your_password
 
 # API Configuration
 API_BASE_URL=https://api.example.com/v1
+
+# Telegram Notifications (Optional)
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_telegram_chat_id
 ```
 
 **Benefits of separation:**
@@ -444,7 +453,9 @@ Required secrets:
 - `BASE_URL` - Application URL for E2E tests
 - `STANDARD_USER` - Test username for authentication
 - `STANDARD_PASSWORD` - Test user password
-- `API_BASE_URL` - (Optional) API base URL for API tests
+- `API_BASE_URL` - API base URL for API tests
+- `TELEGRAM_BOT_TOKEN` - Telegram bot token for notifications
+- `TELEGRAM_CHAT_ID` - Telegram chat ID for notifications
 
 ### Automatic Triggers
 
@@ -479,6 +490,79 @@ You can manually trigger tests from GitHub Actions tab with options:
 - ✅ Test artifacts retention (30 days)
 - ✅ Environment variables from GitHub Secrets or defaults
 - ✅ ESLint and Prettier checks before tests
+
+## 📱 Telegram Notifications
+
+### Setup Telegram Bot
+
+**1. Create Bot:**
+- Open Telegram and search for `@BotFather`
+- Send `/newbot` command
+- Follow instructions to create your bot and get the token
+
+**2. Get Chat ID:**
+- Add your bot to the desired chat/channel
+- Send a message to the chat
+- Get chat ID using this URL: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+
+**3. Configure Secrets:**
+Add the following secrets to GitHub repository:
+
+```
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+```
+
+### Notification Script
+
+The `send-telegram-notification.sh` script automatically sends test results to Telegram after CI/CD execution.
+
+**Features:**
+- ✅ Automatic test statistics collection from Allure results
+- ✅ Success rate calculation
+- ✅ Status indicators (🟢 SUCCESS / 🔴 FAILED)
+- ✅ Direct links to repository, commit, and test report
+- ✅ HTML formatting for better readability
+- ✅ Handles cases with zero tests gracefully
+
+**Message Structure:**
+
+```
+🚀 Playwright Tests Completed!
+
+📊 Test Statistics:
+• Total tests: 25
+• Passed: 23 ✅
+• Failed: 2 ❌
+• Success rate: 92%
+
+🔗 Links:
+• Repository: https://github.com/owner/repo
+• Commit: https://github.com/owner/repo/commit/sha
+• Report: https://owner.github.io/repo/
+
+🟢 Status: SUCCESS
+```
+
+**Telegram Notification Preview:**
+![Telegram Notification](wiki/Telegram_Notification.png)
+
+**Usage in CI/CD:**
+The script runs automatically after tests in GitHub Actions workflow. To use locally:
+
+```bash
+# Set environment variables
+export TELEGRAM_BOT_TOKEN="your_bot_token"
+export TELEGRAM_CHAT_ID="your_chat_id"
+export GITHUB_REPOSITORY="owner/repo"
+export GITHUB_SHA="commit_sha"
+export GITHUB_REPOSITORY_OWNER="owner"
+export GITHUB_EVENT_REPOSITORY_NAME="repo"
+export JOB_STATUS="success"  # or "failure"
+
+# Run script
+./send-telegram-notification.sh
+```
 
 ## 🛠️ Technologies
 
