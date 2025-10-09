@@ -496,11 +496,13 @@ You can manually trigger tests from GitHub Actions tab with options:
 ### Setup Telegram Bot
 
 **1. Create Bot:**
+
 - Open Telegram and search for `@BotFather`
 - Send `/newbot` command
 - Follow instructions to create your bot and get the token
 
 **2. Get Chat ID:**
+
 - Add your bot to the desired chat/channel
 - Send a message to the chat
 - Get chat ID using this URL: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
@@ -518,6 +520,7 @@ TELEGRAM_CHAT_ID=your_chat_id_here
 The `send-telegram-notification.sh` script automatically sends test results to Telegram after CI/CD execution.
 
 **Features:**
+
 - ✅ Automatic test statistics collection from Allure results
 - ✅ Success rate calculation
 - ✅ Status indicators (🟢 SUCCESS / 🔴 FAILED)
