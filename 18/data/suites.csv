@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","11368","Add multiple products to cart and remove one","webkit","Sun Oct 26 14:25:15 UTC 2025","passed","Sun Oct 26 14:25:27 UTC 2025","Shopping cart functionality","e2e/shopping.spec.js","",""
+"","11648","Complete checkout process with generated user data","webkit","Sun Oct 26 14:25:15 UTC 2025","passed","Sun Oct 26 14:25:27 UTC 2025","Checkout flow","e2e/checkout.spec.js","",""
+"","10680","Successful login and logout","webkit","Sun Oct 26 14:25:15 UTC 2025","passed","Sun Oct 26 14:25:26 UTC 2025","Login and logout functionality","e2e/login.spec.js","",""
+"","4461","Add multiple products to cart and remove one","firefox","Sun Oct 26 14:25:59 UTC 2025","passed","Sun Oct 26 14:26:04 UTC 2025","Shopping cart functionality","e2e/shopping.spec.js","",""
+"","4445","Successful login and logout","firefox","Sun Oct 26 14:25:59 UTC 2025","passed","Sun Oct 26 14:26:04 UTC 2025","Login and logout functionality","e2e/login.spec.js","",""
+"","4978","Complete checkout process with generated user data","firefox","Sun Oct 26 14:25:59 UTC 2025","passed","Sun Oct 26 14:26:04 UTC 2025","Checkout flow","e2e/checkout.spec.js","",""

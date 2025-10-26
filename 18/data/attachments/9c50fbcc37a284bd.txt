@@ -1,0 +1,50 @@
+
+================================================================================
+▶ Starting test: Complete checkout process with generated user data
+================================================================================
+
+→ BasePage.goto()
+
+→ LoginPage.login()
+
+→ ProductsPage.assertElementTextEquals()
+
+→ ProductsPage.addProductAndVerifyCart()
+
+→ ProductsPage.addProductAndVerifyCart()
+
+→ ProductsPage.tapWhenVisible()
+
+→ CartPage.assertElementTextEquals()
+
+→ CartPage.tapWhenVisible()
+
+→ CheckoutPage.assertElementIsVisible()
+
+→ CheckoutPage.assertElementTextEquals()
+
+→ CheckoutPage.fillCheckoutInfo()
+
+→ CheckoutPage.tapWhenVisible()
+
+→ CheckoutPage.assertElementIsVisible()
+
+→ CheckoutPage.assertElementTextEquals()
+
+→ CheckoutPage.tapWhenVisible()
+
+→ CheckoutPage.assertElementTextEquals()
+
+→ CheckoutPage.assertContainsText()
+
+→ CheckoutPage.waitForUrl()
+
+→ CheckoutPage.tapWhenVisible()
+
+→ ProductsPage.assertElementTextEquals()
+
+→ ProductsPage.assertElementIsNotVisible()
+
+✓ Test passed: Complete checkout process with generated user data
+================================================================================
+
