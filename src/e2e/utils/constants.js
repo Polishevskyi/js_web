@@ -29,8 +29,11 @@ class Constants {
   };
 
   static ERROR_MESSAGES = {
-    textAssertionFailed: (selector, expected, actual) =>
-      `Text assertion failed for element "${selector}". ` + `Expected: "${expected}", Actual: "${actual}"`,
+    textAssertionFailed: (selector, expected, actual) => {
+      const message =
+        `Text assertion failed for element "${selector}". ` + `Expected: "${expected}", Actual: "${actual}"`;
+      return message;
+    },
   };
 
   static PRODUCT_NAMES = {
