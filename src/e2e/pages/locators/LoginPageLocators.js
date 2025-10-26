@@ -1,7 +1,0 @@
-module.exports = {
-  usernameInput: '#user-name',
-  passwordInput: '#password',
-  loginButton: '#login-button',
-  errorMessage: '[data-test="error"]',
-  errorButton: '.error-button',
-};

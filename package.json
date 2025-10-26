@@ -2,6 +2,7 @@
   "name": "saucedemo-automation-framework",
   "version": "1.0.0",
   "description": "Senior-level automation framework for SauceDemo with Playwright, Allure, and Data Generation",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
@@ -42,9 +43,20 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-playwright": "^1.8.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }

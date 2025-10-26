@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Перевірка формату commit message згідно Conventional Commits
+commit_msg=$(cat "$1")
+
+# Перевірка на відповідність формату Conventional Commits
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}"; then
+  echo "❌ Помилка: Повідомлення коміту не відповідає формату Conventional Commits"
+  echo ""
+  echo "Формат: <type>(<scope>): <subject>"
+  echo ""
+  echo "Приклади:"
+  echo "  feat: додати нову функцію"
+  echo "  fix: виправити баг"
+  echo "  docs: оновити документацію"
+  echo "  style: зміни форматування"
+  echo "  refactor: рефакторинг коду"
+  echo "  test: додати тести"
+  echo "  chore: оновити залежності"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Формат коміту правильний"
+

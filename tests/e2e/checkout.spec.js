@@ -1,51 +1,47 @@
-const { test } = require('../../fixtures/e2eFixtures');
-const TestData = require('../../data/testData');
-const DataGenerator = require('../../data/e2eGenerators');
-const { CART_COUNTS } = require('../../src/e2e/constants/testData.constants');
+import { test } from '../../src/e2e/fixtures/e2eFixtures.js';
+import Constants from '../../src/e2e/utils/constants.js';
+
+const { CART_COUNTS, PAGE_TITLES, MESSAGES, URLS } = Constants;
 
 test.describe('Checkout flow', () => {
   test('Complete checkout process with generated user data', async ({
+    basePage,
     loginPage,
     productsPage,
     cartPage,
     checkoutPage,
+    userInfo,
+    productsScreen,
+    cartScreen,
+    checkoutScreen,
   }) => {
-    const userInfo = DataGenerator.generateUserInfo();
+    await basePage.goto(URLS.ROOT);
+    await loginPage.login(process.env.STANDARD_USER, process.env.STANDARD_PASSWORD);
+    await productsPage.assertElementTextEquals(productsScreen.locators.pageTitle, PAGE_TITLES.PRODUCTS);
 
-    await loginPage.navigate();
-    await loginPage.login(TestData.USERS.STANDARD.username, TestData.USERS.STANDARD.password);
-    await productsPage.assertProductsPageDisplayed();
+    await productsPage.addProductAndVerifyCart(productsScreen.locators.PRODUCTS.BACKPACK, CART_COUNTS.ONE_ITEM);
+    await productsPage.addProductAndVerifyCart(productsScreen.locators.PRODUCTS.FLEECE_JACKET, CART_COUNTS.TWO_ITEMS);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.BACKPACK));
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.ONE_ITEM);
+    await productsPage.tapWhenVisible(productsScreen.locators.shoppingCartLink);
+    await cartPage.assertElementTextEquals(cartScreen.locators.pageTitle, PAGE_TITLES.YOUR_CART);
+    await cartPage.tapWhenVisible(cartScreen.locators.checkoutButton);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.FLEECE_JACKET));
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.TWO_ITEMS);
+    await checkoutPage.assertElementIsVisible(checkoutScreen.locators.firstNameInput);
+    await checkoutPage.assertElementTextEquals(checkoutScreen.locators.pageTitle, PAGE_TITLES.CHECKOUT_INFORMATION);
 
-    await productsPage.click(productsPage.locators.shoppingCartLink);
-    await cartPage.assertCartPageDisplayed();
-    await cartPage.assertCartItemsCount(2);
+    await checkoutPage.fillCheckoutInfo(userInfo.firstName, userInfo.lastName, userInfo.postalCode);
+    await checkoutPage.tapWhenVisible(checkoutScreen.locators.continueButton);
 
-    await cartPage.click(cartPage.locators.checkoutButton);
+    await checkoutPage.assertElementIsVisible(checkoutScreen.locators.finishButton);
+    await checkoutPage.assertElementTextEquals(checkoutScreen.locators.pageTitle, PAGE_TITLES.CHECKOUT_OVERVIEW);
+    await checkoutPage.tapWhenVisible(checkoutScreen.locators.finishButton);
 
-    await checkoutPage.assertCheckoutStepOneDisplayed();
-    await checkoutPage.fillCheckoutInformation({
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
-      postalCode: userInfo.postalCode,
-    });
+    await checkoutPage.assertElementTextEquals(checkoutScreen.locators.completeHeader, PAGE_TITLES.ORDER_COMPLETE);
+    await checkoutPage.assertContainsText(checkoutScreen.locators.completeText, MESSAGES.ORDER_DISPATCHED);
+    await checkoutPage.waitForUrl(URLS.CHECKOUT_COMPLETE);
 
-    await checkoutPage.click(checkoutPage.locators.continueButton);
-    await checkoutPage.assertCheckoutOverviewDisplayed();
-
-    await checkoutPage.click(checkoutPage.locators.finishButton);
-
-    await checkoutPage.assertOrderComplete();
-    await checkoutPage.waitForUrl('checkout-complete.html');
-
-    await checkoutPage.click(checkoutPage.locators.backHomeButton);
-    await productsPage.assertProductsPageDisplayed();
-
-    await productsPage.assertElementNotVisible(productsPage.locators.shoppingCartBadge);
+    await checkoutPage.tapWhenVisible(checkoutScreen.locators.backHomeButton);
+    await productsPage.assertElementTextEquals(productsScreen.locators.pageTitle, PAGE_TITLES.PRODUCTS);
+    await productsPage.assertElementIsNotVisible(productsScreen.locators.shoppingCartBadge);
   });
 });

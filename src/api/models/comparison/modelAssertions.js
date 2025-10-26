@@ -1,5 +1,5 @@
-const { compareModels } = require('./modelComparator');
-const { loadComparisonRules, getRuleFor } = require('./modelComparisonConfig');
+import { compareModels } from './modelComparator.js';
+import { loadComparisonRules, getRuleFor } from './modelComparisonConfig.js';
 
 const DEFAULT_CONFIG_PATH = 'src/api/models/comparison/modelRules.json';
 
@@ -51,4 +51,4 @@ class ModelAssertions {
 
 const assertThatModels = (request, response) => new ModelAssertions(request, response);
 
-module.exports = { assertThatModels };
+export { assertThatModels };

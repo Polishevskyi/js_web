@@ -1,7 +1,8 @@
-const { test, expect, HTTP_STATUS } = require('../../fixtures/apiFixtures');
+import { test, expect, HTTP_STATUS, PetSteps } from '../../src/api/fixtures/apiFixtures.js';
 
 test.describe('DELETE Pet Test', () => {
-  test('should delete a pet and validate status code', async ({ petSteps }) => {
+  test('should delete a pet and validate status code', async ({ request }) => {
+    const petSteps = new PetSteps(request);
     const { responseData: createdPet } = await petSteps.createPet();
 
     const { status } = await petSteps.deletePet(createdPet.id);

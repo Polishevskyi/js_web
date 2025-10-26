@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+import { promises as fs } from 'fs';
 
 const configCache = new Map();
 
@@ -47,4 +47,4 @@ const loadComparisonRules = async (filePath) => {
 
 const getRuleFor = (rules, requestClassName) => rules.get(requestClassName) ?? null;
 
-module.exports = { loadComparisonRules, getRuleFor };
+export { loadComparisonRules, getRuleFor };

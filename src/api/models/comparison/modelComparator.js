@@ -25,4 +25,4 @@ const compareModels = (request, response, fieldMap) => {
   };
 };
 
-module.exports = { compareModels };
+export { compareModels };

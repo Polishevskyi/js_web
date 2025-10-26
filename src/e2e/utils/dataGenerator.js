@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker');
+import { faker } from '@faker-js/faker';
 
 class DataGenerator {
   static generateUserInfo() {
@@ -10,4 +10,4 @@ class DataGenerator {
   }
 }
 
-module.exports = DataGenerator;
+export default DataGenerator;

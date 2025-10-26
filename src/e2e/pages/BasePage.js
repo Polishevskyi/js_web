@@ -1,18 +1,38 @@
-const { expect } = require('@playwright/test');
-const Logger = require('../../../helpers/logger');
+import { expect } from '@playwright/test';
+import Logger from '../../../helpers/logger.js';
+import Constants from '../utils/constants.js';
+
+const COMMON_LOCATORS = {
+  pageTitle: '.title',
+  errorMessage: '[data-test="error"]',
+  cartItem: '.cart_item',
+  shoppingCartBadge: '.shopping_cart_badge',
+  removeButton: (productName) => `[data-test="remove-${productName}"]`,
+  removeButtonFirst: '[data-test^="remove"]',
+  PRODUCTS: {
+    BACKPACK: 'sauce-labs-backpack',
+    BIKE_LIGHT: 'sauce-labs-bike-light',
+    BOLT_TSHIRT: 'sauce-labs-bolt-t-shirt',
+    FLEECE_JACKET: 'sauce-labs-fleece-jacket',
+  },
+};
 
 class BasePage {
   constructor(page) {
     this.page = page;
+    this.logger = Logger;
     return this.createProxy();
   }
 
+  /* eslint-disable no-underscore-dangle */
   createProxy() {
     return new Proxy(this, {
-      get(target, prop) {
+      get: (target, prop) => {
         const original = target[prop];
-        if (typeof original === 'function' && prop !== 'constructor' && !prop.startsWith('_')) {
-          return async function (...args) {
+        const shouldLog = this.shouldLogMethod(original, prop);
+
+        if (shouldLog) {
+          return async (...args) => {
             const methodName = `${target.constructor.name}.${prop}`;
             Logger.step(`${methodName}()`);
             return original.apply(target, args);
@@ -23,47 +43,59 @@ class BasePage {
     });
   }
 
-  async goto(url) {
-    await this.page.goto(url);
+  shouldLogMethod(method, propName) {
+    return (
+      typeof method === 'function' &&
+      propName !== 'constructor' &&
+      !propName.startsWith('_') &&
+      propName !== 'createProxy'
+    );
   }
 
-  async waitForElement(selector, timeout = 10000) {
+  goto(url) {
+    return this.page.goto(url);
+  }
+
+  async assertElementIsVisible(selector, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
     await this.page.waitForSelector(selector, { state: 'visible', timeout });
+    return this.page.locator(selector);
   }
 
-  async click(selector) {
-    await this.page.waitForSelector(selector, { state: 'visible' });
-    await this.page.click(selector);
+  async assertElementIsNotVisible(selector, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
+    await this.page.waitForSelector(selector, { state: 'hidden', timeout });
   }
 
-  async fill(selector, text) {
-    await this.page.waitForSelector(selector, { state: 'visible' });
-    await this.page.fill(selector, text);
+  async tapWhenVisible(selector, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
+    const element = await this.assertElementIsVisible(selector, timeout);
+    return element.click();
   }
 
-  async waitForUrl(urlPart) {
-    await this.page.waitForURL(`**/${urlPart}**`);
+  async setValue(selector, text, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
+    const element = await this.assertElementIsVisible(selector, timeout);
+    return element.fill(text);
   }
 
-  async assertElementVisible(selector) {
-    await expect(this.page.locator(selector)).toBeVisible();
+  async getElementText(selector, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
+    const element = await this.assertElementIsVisible(selector, timeout);
+    return element.textContent();
   }
 
-  async assertText(selector, expectedText) {
-    await expect(this.page.locator(selector)).toHaveText(expectedText);
-  }
+  async assertElementTextEquals(selector, expectedText, timeout = Constants.TIMEOUTS.DEFAULT_TIMEOUT) {
+    const element = await this.assertElementIsVisible(selector, timeout);
+    const actualText = await element.textContent();
 
-  async assertPageTitle(selector, expectedTitle) {
-    await this.waitForElement(selector);
-    await this.assertText(selector, expectedTitle);
-  }
-
-  async assertElementNotVisible(selector) {
-    await expect(this.page.locator(selector)).toBeHidden();
+    if (actualText !== expectedText) {
+      throw new Error(Constants.ERROR_MESSAGES.textAssertionFailed(selector, expectedText, actualText));
+    }
+    return element;
   }
 
   async assertContainsText(selector, text) {
-    await expect(this.page.locator(selector)).toContainText(text);
+    return expect(this.page.locator(selector)).toContainText(text);
+  }
+
+  async waitForUrl(urlPart) {
+    return this.page.waitForURL(`**/${urlPart}**`);
   }
 
   async getElementCount(selector) {
@@ -83,4 +115,5 @@ class BasePage {
   }
 }
 
-module.exports = BasePage;
+export default BasePage;
+export { COMMON_LOCATORS };

@@ -1,26 +1,13 @@
-const BasePage = require('./BasePage');
-const locators = require('./locators/CartPageLocators');
-const { PAGE_TITLES } = require('../constants/testData.constants');
+import BasePage, { COMMON_LOCATORS } from './BasePage.js';
 
-class CartPage extends BasePage {
-  constructor(page) {
-    super(page);
-    this.locators = locators;
-  }
+const CART_PAGE_LOCATORS = {
+  ...COMMON_LOCATORS,
+  cartItemName: '.inventory_item_name',
+  continueShoppingButton: '#continue-shopping',
+  checkoutButton: '#checkout',
+  cartQuantity: '.cart_quantity',
+};
 
-  async assertCartPageDisplayed() {
-    await this.assertPageTitle(this.locators.pageTitle, PAGE_TITLES.YOUR_CART);
-  }
+class CartPage extends BasePage {}
 
-  async assertCartContainsProduct(productName) {
-    const items = await this.getAllTexts(this.locators.cartItemName);
-    this.assertArrayContains(items, productName);
-  }
-
-  async assertCartItemsCount(expectedCount) {
-    const count = await this.getElementCount(this.locators.cartItem);
-    this.assertEqual(count, expectedCount);
-  }
-}
-
-module.exports = CartPage;
+export { CartPage, CART_PAGE_LOCATORS };

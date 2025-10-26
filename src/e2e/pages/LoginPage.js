@@ -1,27 +1,29 @@
-const BasePage = require('./BasePage');
-const locators = require('./locators/LoginPageLocators');
+import BasePage, { COMMON_LOCATORS } from './BasePage.js';
+
+const LOGIN_PAGE_LOCATORS = {
+  usernameInput: '#user-name',
+  passwordInput: '#password',
+  loginButton: '#login-button',
+  ...COMMON_LOCATORS,
+  errorButton: '.error-button',
+};
 
 class LoginPage extends BasePage {
-  constructor(page) {
-    super(page);
-    this.locators = locators;
-  }
-
-  async navigate() {
-    await this.goto('/');
+  async fillLoginCredentials(username, password) {
+    await this.setValue(LOGIN_PAGE_LOCATORS.usernameInput, username);
+    await this.setValue(LOGIN_PAGE_LOCATORS.passwordInput, password);
   }
 
   async login(username, password) {
-    await this.fill(this.locators.usernameInput, username);
-    await this.fill(this.locators.passwordInput, password);
-    await this.click(this.locators.loginButton);
+    await this.fillLoginCredentials(username, password);
+    await this.tapWhenVisible(LOGIN_PAGE_LOCATORS.loginButton);
   }
 
   async assertLoginPageDisplayed() {
-    await this.assertElementVisible(this.locators.usernameInput);
-    await this.assertElementVisible(this.locators.passwordInput);
-    await this.assertElementVisible(this.locators.loginButton);
+    await this.assertElementIsVisible(LOGIN_PAGE_LOCATORS.usernameInput);
+    await this.assertElementIsVisible(LOGIN_PAGE_LOCATORS.passwordInput);
+    await this.assertElementIsVisible(LOGIN_PAGE_LOCATORS.loginButton);
   }
 }
 
-module.exports = LoginPage;
+export { LoginPage, LOGIN_PAGE_LOCATORS };

@@ -1,8 +1,8 @@
-const { generatePet } = require('../../../data/apiGenerators');
-const Requester = require('../utils/requester');
-const { ENDPOINTS_KEY } = require('../utils/endpoints');
-const CreatePetRequest = require('../models/CreatePetRequest');
-const Logger = require('../../../helpers/logger');
+import { generatePet } from '../utils/dataGenerator.js';
+import Requester from '../utils/requester.js';
+import { ENDPOINTS_KEY } from '../utils/constants.js';
+import CreatePetRequest from '../models/CreatePetRequest.js';
+import Logger from '../../../helpers/logger.js';
 
 class PetSteps {
   constructor(requestContext) {
@@ -37,17 +37,6 @@ class PetSteps {
     };
   }
 
-  async getPetById(petId) {
-    const response = await this.requester.request(ENDPOINTS_KEY.GET_PET, {
-      pathParams: { petId },
-    });
-
-    return {
-      responseData: response.data,
-      status: response.status,
-    };
-  }
-
   async updatePet(petData) {
     const response = await this.requester.request(ENDPOINTS_KEY.UPDATE_PET, {
       data: new CreatePetRequest(petData),
@@ -69,16 +58,6 @@ class PetSteps {
       status: response.status,
     };
   }
-
-  async createAndGetPet(petData = null) {
-    const createResult = await this.createPet(petData);
-    const getResult = await this.getPetById(createResult.responseData.id);
-
-    return {
-      createResponse: createResult,
-      getResponse: getResult,
-    };
-  }
 }
 
-module.exports = { PetSteps };
+export { PetSteps };

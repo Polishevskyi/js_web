@@ -1,4 +1,4 @@
-const BaseModel = require('./BaseModel');
+import BaseModel from './BaseModel.js';
 
 class CreatePetRequest extends BaseModel {
   constructor({ id, category, name, photoUrls, tags, status }) {
@@ -13,4 +13,4 @@ class CreatePetRequest extends BaseModel {
   }
 }
 
-module.exports = CreatePetRequest;
+export default CreatePetRequest;

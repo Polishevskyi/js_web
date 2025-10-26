@@ -1,8 +1,8 @@
-const { defineConfig, devices } = require('@playwright/test');
-require('dotenv').config();
-const config = require('./config');
+import { defineConfig, devices } from '@playwright/test';
+import 'dotenv/config';
+import config from './config.js';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
   timeout: config.timeout,
   fullyParallel: true,

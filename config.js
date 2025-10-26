@@ -1,7 +1,7 @@
-module.exports = {
+export default {
   // Test execution settings
   timeout: 60000,
-  retryCount: 0,
+  retryCount: 3,
   workers: 3,
 
   // CI settings

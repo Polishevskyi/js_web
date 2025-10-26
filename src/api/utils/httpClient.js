@@ -1,14 +1,13 @@
-require('dotenv').config();
-
-const backendUrl = process.env.API_BASE_URL;
+import 'dotenv/config';
+import { HEADERS } from './constants.js';
 
 class HttpClient {
   constructor(requestContext) {
     this.requestContext = requestContext;
-    this.baseURL = backendUrl;
+    this.baseURL = process.env.API_BASE_URL;
     this.defaultHeaders = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'Content-Type': HEADERS.CONTENT_TYPE,
+      Accept: HEADERS.ACCEPT,
     };
   }
 
@@ -78,4 +77,4 @@ class HttpClient {
   }
 }
 
-module.exports = HttpClient;
+export default HttpClient;

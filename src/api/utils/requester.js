@@ -1,5 +1,5 @@
-const HttpClient = require('./httpClient');
-const { endpoints } = require('./endpoints');
+import HttpClient from './httpClient.js';
+import { endpoints } from './endpoints.js';
 
 class Requester {
   constructor(requestContext) {
@@ -44,7 +44,6 @@ class Requester {
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   instantiateModel(ModelClass, data) {
     if (typeof ModelClass.fromJson === 'function') {
       return ModelClass.fromJson(data);
@@ -53,4 +52,4 @@ class Requester {
   }
 }
 
-module.exports = Requester;
+export default Requester;

@@ -1,33 +1,29 @@
-const BasePage = require('./BasePage');
-const locators = require('./locators/CheckoutPageLocators');
-const { PAGE_TITLES, MESSAGES } = require('../constants/testData.constants');
+import BasePage from './BasePage.js';
+
+const CHECKOUT_PAGE_LOCATORS = {
+  firstNameInput: '#first-name',
+  lastNameInput: '#last-name',
+  postalCodeInput: '#postal-code',
+  continueButton: '#continue',
+  cancelButton: '#cancel',
+  errorMessage: '[data-test="error"]',
+  pageTitle: '.title',
+  cartItem: '.cart_item',
+  subtotalLabel: '.summary_subtotal_label',
+  taxLabel: '.summary_tax_label',
+  totalLabel: '.summary_total_label',
+  finishButton: '#finish',
+  completeHeader: '.complete-header',
+  completeText: '.complete-text',
+  backHomeButton: '#back-to-products',
+};
 
 class CheckoutPage extends BasePage {
-  constructor(page) {
-    super(page);
-    this.locators = locators;
-  }
-
-  async fillCheckoutInformation({ firstName, lastName, postalCode }) {
-    await this.fill(this.locators.firstNameInput, firstName);
-    await this.fill(this.locators.lastNameInput, lastName);
-    await this.fill(this.locators.postalCodeInput, postalCode);
-  }
-
-  async assertCheckoutStepOneDisplayed() {
-    await this.waitForElement(this.locators.firstNameInput);
-    await this.assertPageTitle(this.locators.pageTitle, PAGE_TITLES.CHECKOUT_INFORMATION);
-  }
-
-  async assertCheckoutOverviewDisplayed() {
-    await this.waitForElement(this.locators.finishButton);
-    await this.assertPageTitle(this.locators.pageTitle, PAGE_TITLES.CHECKOUT_OVERVIEW);
-  }
-
-  async assertOrderComplete() {
-    await this.assertPageTitle(this.locators.completeHeader, PAGE_TITLES.ORDER_COMPLETE);
-    await this.assertContainsText(this.locators.completeText, MESSAGES.ORDER_DISPATCHED);
+  async fillCheckoutInfo(firstName, lastName, postalCode) {
+    await this.setValue(CHECKOUT_PAGE_LOCATORS.firstNameInput, firstName);
+    await this.setValue(CHECKOUT_PAGE_LOCATORS.lastNameInput, lastName);
+    await this.setValue(CHECKOUT_PAGE_LOCATORS.postalCodeInput, postalCode);
   }
 }
 
-module.exports = CheckoutPage;
+export { CheckoutPage, CHECKOUT_PAGE_LOCATORS };

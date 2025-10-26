@@ -1,35 +1,42 @@
-const { test } = require('../../fixtures/e2eFixtures');
-const TestData = require('../../data/testData');
-const { CART_COUNTS } = require('../../src/e2e/constants/testData.constants');
+import { test } from '../../src/e2e/fixtures/e2eFixtures.js';
+import Constants from '../../src/e2e/utils/constants.js';
+
+const { CART_COUNTS, PAGE_TITLES, PRODUCT_NAMES, URLS, ITEM_COUNTS } = Constants;
 
 test.describe('Shopping cart functionality', () => {
-  test('Add multiple products to cart and remove one', async ({ loginPage, productsPage, cartPage }) => {
-    await loginPage.navigate();
-    await loginPage.login(TestData.USERS.STANDARD.username, TestData.USERS.STANDARD.password);
-    await productsPage.assertProductsPageDisplayed();
+  test('Add multiple products to cart and remove one', async ({
+    basePage,
+    loginPage,
+    productsPage,
+    cartPage,
+    productsScreen,
+    cartScreen,
+  }) => {
+    await basePage.goto(URLS.ROOT);
+    await loginPage.login(process.env.STANDARD_USER, process.env.STANDARD_PASSWORD);
+    await productsPage.assertElementTextEquals(productsScreen.locators.pageTitle, PAGE_TITLES.PRODUCTS);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.BACKPACK));
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.ONE_ITEM);
+    await productsPage.addProductAndVerifyCart(productsScreen.locators.PRODUCTS.BACKPACK, CART_COUNTS.ONE_ITEM);
+    await productsPage.addProductAndVerifyCart(productsScreen.locators.PRODUCTS.BIKE_LIGHT, CART_COUNTS.TWO_ITEMS);
+    await productsPage.addProductAndVerifyCart(productsScreen.locators.PRODUCTS.BOLT_TSHIRT, CART_COUNTS.THREE_ITEMS);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.BIKE_LIGHT));
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.TWO_ITEMS);
+    await productsPage.tapWhenVisible(productsScreen.locators.shoppingCartLink);
+    await cartPage.assertElementTextEquals(cartScreen.locators.pageTitle, PAGE_TITLES.YOUR_CART);
 
-    await productsPage.click(productsPage.locators.addToCartButton(TestData.PRODUCTS.BOLT_TSHIRT));
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.THREE_ITEMS);
+    const itemsCount = await cartPage.getElementCount(cartScreen.locators.cartItem);
+    cartPage.assertEqual(itemsCount, ITEM_COUNTS.THREE);
 
-    await productsPage.click(productsPage.locators.shoppingCartLink);
-    await cartPage.assertCartPageDisplayed();
+    const items = await cartPage.getAllTexts(cartScreen.locators.cartItemName);
+    cartPage.assertArrayContains(items, PRODUCT_NAMES.BACKPACK);
+    cartPage.assertArrayContains(items, PRODUCT_NAMES.BIKE_LIGHT);
+    cartPage.assertArrayContains(items, PRODUCT_NAMES.BOLT_TSHIRT);
 
-    await cartPage.assertCartItemsCount(3);
-    await cartPage.assertCartContainsProduct(TestData.PRODUCT_NAMES.BACKPACK);
-    await cartPage.assertCartContainsProduct(TestData.PRODUCT_NAMES.BIKE_LIGHT);
-    await cartPage.assertCartContainsProduct(TestData.PRODUCT_NAMES.BOLT_TSHIRT);
+    await cartPage.tapWhenVisible(cartScreen.locators.removeButton(productsScreen.locators.PRODUCTS.BIKE_LIGHT));
+    const itemsCountAfterRemoval = await cartPage.getElementCount(cartScreen.locators.cartItem);
+    cartPage.assertEqual(itemsCountAfterRemoval, ITEM_COUNTS.TWO);
 
-    await cartPage.click(cartPage.locators.removeButton(TestData.PRODUCTS.BIKE_LIGHT));
-    await cartPage.assertCartItemsCount(2);
-
-    await cartPage.click(cartPage.locators.continueShoppingButton);
-    await productsPage.assertProductsPageDisplayed();
-    await productsPage.assertText(productsPage.locators.shoppingCartBadge, CART_COUNTS.TWO_ITEMS);
+    await cartPage.tapWhenVisible(cartScreen.locators.continueShoppingButton);
+    await productsPage.assertElementTextEquals(productsScreen.locators.pageTitle, PAGE_TITLES.PRODUCTS);
+    await productsPage.assertElementTextEquals(productsScreen.locators.shoppingCartBadge, CART_COUNTS.TWO_ITEMS);
   });
 });
