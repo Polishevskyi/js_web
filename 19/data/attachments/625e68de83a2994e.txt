@@ -1,0 +1,24 @@
+
+================================================================================
+▶ Starting test: Successful login and logout
+================================================================================
+
+→ BasePage.goto()
+
+→ LoginPage.assertLoginPageDisplayed()
+
+→ LoginPage.login()
+
+→ ProductsPage.assertElementTextEquals()
+
+→ ProductsPage.waitForUrl()
+
+→ ProductsPage.logout()
+
+→ LoginPage.waitForUrl()
+
+→ LoginPage.assertLoginPageDisplayed()
+
+✓ Test passed: Successful login and logout
+================================================================================
+

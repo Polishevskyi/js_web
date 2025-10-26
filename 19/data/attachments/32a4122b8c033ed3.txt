@@ -1,0 +1,48 @@
+
+================================================================================
+▶ Starting test: Add multiple products to cart and remove one
+================================================================================
+
+→ BasePage.goto()
+
+→ LoginPage.login()
+
+→ ProductsPage.assertElementTextEquals()
+
+→ ProductsPage.addProductAndVerifyCart()
+
+→ ProductsPage.addProductAndVerifyCart()
+
+→ ProductsPage.addProductAndVerifyCart()
+
+→ ProductsPage.tapWhenVisible()
+
+→ CartPage.assertElementTextEquals()
+
+→ CartPage.getElementCount()
+
+→ CartPage.assertEqual()
+
+→ CartPage.getAllTexts()
+
+→ CartPage.assertArrayContains()
+
+→ CartPage.assertArrayContains()
+
+→ CartPage.assertArrayContains()
+
+→ CartPage.tapWhenVisible()
+
+→ CartPage.getElementCount()
+
+→ CartPage.assertEqual()
+
+→ CartPage.tapWhenVisible()
+
+→ ProductsPage.assertElementTextEquals()
+
+→ ProductsPage.assertElementTextEquals()
+
+✓ Test passed: Add multiple products to cart and remove one
+================================================================================
+
