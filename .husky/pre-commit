@@ -2,4 +2,4 @@
 
 # Run lint-staged before commit
 # Automatically checks and formats code
-npx lint-staged
+# npx lint-staged

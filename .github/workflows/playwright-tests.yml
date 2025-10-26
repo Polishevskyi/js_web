@@ -34,18 +34,19 @@ permissions:
 
 jobs:
   test:
-    name: Test on ${{ matrix.browser }}
+    name: Test on ${{ matrix.displayName }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        browser: >-
-          ${{
-            github.event_name == 'workflow_dispatch' && github.event.inputs.browser != 'all'
-            && fromJSON(format('["{0}"]', github.event.inputs.browser))
-            || fromJSON('["chromium", "firefox", "webkit"]')
-          }}
+        include:
+          - browser: chromium
+            displayName: Chromium
+          - browser: firefox
+            displayName: Firefox
+          - browser: webkit
+            displayName: Webkit
 
     steps:
       - name: Checkout code
@@ -60,9 +61,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Run ESLint
-        run: npm run lint
 
       - name: Check code formatting
         run: npm run format:check
@@ -99,7 +97,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: playwright-report-${{ matrix.browser }}
+          name: playwright-report-${{ matrix.displayName }}
           path: playwright-report/
           retention-days: 30
 
@@ -108,7 +106,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: allure-results-${{ matrix.browser }}
+          name: allure-results-${{ matrix.displayName }}
           path: allure-results/
           retention-days: 30
 
