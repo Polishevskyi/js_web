@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
+# Run lint-staged before commit
+# Automatically checks and formats code
 npx lint-staged
